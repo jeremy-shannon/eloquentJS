@@ -1,5 +1,8 @@
 // load dependencies
-require("./code/load")("code/mountains.js", "code/chapter/06_object.js", "code/vector.js");
+require("./code/load")("code/mountains.js", 
+                       "code/chapter/06_object.js", 
+                       "code/vector.js",
+                       "code/stretch.js");
 
 //console.log("\n" + drawTable(dataTable(MOUNTAINS)) + "\n");
 
@@ -15,3 +18,15 @@ console.log(new Vector(3, 4).length);
 // → 5
 
 
+// Your code here.
+console.log("\n\n --- Another Cell --- \n\n")
+
+var sc = new StretchCell(new TextCell("abc"), 1, 2);
+console.log(sc.minWidth());
+// → 3
+console.log(sc.minHeight());
+// → 2
+console.log(sc.draw(3, 2));
+// → ["abc", "   "]
+
+console.log("\n\n --- ? --- \n\n")
