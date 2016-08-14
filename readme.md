@@ -7,3 +7,4 @@
 - Chapter 6
  - A Vector Type
  - Another Cell
+ - Sequence Interface
