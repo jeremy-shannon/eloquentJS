@@ -321,6 +321,7 @@ SmartPlantEater.prototype.act = function(view) {
   if (this.direction == null)
     this.direction = "s"; // just in case it's newborn and there's no space - it needs a direction
   this.turnsSinceEating++;
+  // conditions for reproducing
   if (this.energy > 60 && space) {
     this.children++;
     return {type: "reproduce", direction: space};
@@ -331,6 +332,7 @@ SmartPlantEater.prototype.act = function(view) {
     this.turnsSinceEating = 0;
     return {type: "eat", direction: plant};
   }
+  // conditions for moving
   if (!plant || this.children >= 2) {
     if (view.look(this.direction) == " ")
       return {type: "move", direction: this.direction};
@@ -380,11 +382,12 @@ Tiger.prototype.act = function(view) {
     return {type: "reproduce", direction: space};
   }
   var plantEater = view.find("O");
-  // the conditions for eating are a little complex
-  if (plantEater && this.turnsSinceEating > 5 && this.children < 2) {
+  // the conditions for eating
+  if (plantEater && this.turnsSinceEating > 5) {
     this.turnsSinceEating = 0;
     return {type: "eat", direction: plantEater};
   }
+  // conditions for moving
   if (!plantEater || this.children >= 2) {
     if (view.look(this.direction) == " ")
       return {type: "move", direction: this.direction};
