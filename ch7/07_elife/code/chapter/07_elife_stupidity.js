@@ -310,6 +310,7 @@ function SmartPlantEater() {
   this.energy = 20;
   this.direction = null;
   this.turnsSinceEating = 0;
+  this.children = 0;
 }
 
 SmartPlantEater.prototype.act = function(view) {
@@ -319,14 +320,17 @@ SmartPlantEater.prototype.act = function(view) {
   if (this.direction == null)
     this.direction = "s"; // just in case it's newborn and there's no space - it needs a direction
   this.turnsSinceEating++;
-  if (this.energy > 80 && space) 
+  if (this.energy > 60 && space) {
+    this.children++;
     return {type: "reproduce", direction: space};
+  }
   var plant = view.find("*");
-  if (plant && this.turnsSinceEating > 5) {
+  // the conditions for eating are a little complex
+  if (plant && this.turnsSinceEating > 5 && this.children < 2) {
     this.turnsSinceEating = 0;
     return {type: "eat", direction: plant};
   }
-  if (!plant) {
+  if (!plant || this.children >= 2) {
     if (view.look(this.direction) == " ")
       return {type: "move", direction: this.direction};
     else{
