@@ -304,3 +304,118 @@ var valley = new LifelikeWorld(
    "O": PlantEater,
    "*": Plant}
 );
+
+
+// Your code here
+function SmartPlantEater() {
+  this.energy = 20;
+  this.direction = null;
+  this.turnsSinceEating = 0;
+  this.children = 0;
+}
+
+SmartPlantEater.prototype.act = function(view) {
+  var space = view.find(" ");
+  if (this.direction == null)
+    this.direction = space;
+  if (this.direction == null)
+    this.direction = "s"; // just in case it's newborn and there's no space - it needs a direction
+  this.turnsSinceEating++;
+  if (this.energy > 60 && space) {
+    this.children++;
+    return {type: "reproduce", direction: space};
+  }
+  var plant = view.find("*");
+  // the conditions for eating are a little complex
+  if (plant && this.turnsSinceEating > 5 && this.children < 2) {
+    this.turnsSinceEating = 0;
+    return {type: "eat", direction: plant};
+  }
+  if (!plant || this.children >= 2) {
+    if (view.look(this.direction) == " ")
+      return {type: "move", direction: this.direction};
+    else{
+      this.direction = space;
+      return {type: "move", direction: space};
+    }
+  }
+}
+
+var stupidity = new LifelikeWorld(
+  ["############################",
+   "#####                 ######",
+   "##   ***                **##",
+   "#   *##**         **  O  *##",
+   "#    ***     O    ##**    *#",
+   "#       O         ##***    #",
+   "#                 ##**     #",
+   "#   O       #*             #",
+   "#*          #**       O    #",
+   "#***        ##**    O    **#",
+   "##****     ###***       *###",
+   "############################"],
+  {"#": Wall,
+   "O": SmartPlantEater,
+   "*": Plant}
+);
+
+// Your code here
+function Tiger() {
+  this.energy = 200;
+  this.direction = null;
+  this.turnsSinceEating = 0;
+  this.children = 0;
+}
+// so... my tiger is basically a tweaked SmartPlantEater
+Tiger.prototype.act = function(view) {
+  var space = view.find(" ");
+  if (this.direction == null)
+    this.direction = space;
+  if (this.direction == null)
+    this.direction = "s"; // just in case it's newborn and there's no space - it needs a direction
+  this.turnsSinceEating++;
+  // conditions for reproducing
+  if (this.energy > 500 && space) {
+    this.children++;
+    return {type: "reproduce", direction: space};
+  }
+  var plantEater = view.find("O");
+  // the conditions for eating are a little complex
+  if (plantEater && this.turnsSinceEating > 5 && this.children < 2) {
+    this.turnsSinceEating = 0;
+    return {type: "eat", direction: plantEater};
+  }
+  if (!plantEater || this.children >= 2) {
+    if (view.look(this.direction) == " ")
+      return {type: "move", direction: this.direction};
+    else{
+      this.direction = space;
+      return {type: "move", direction: space};
+    }
+  }
+}
+
+var predator = new LifelikeWorld(
+  ["####################################################",
+   "#                 ####         ****              ###",
+   "#   *  @  ##                 ########       OO    ##",
+   "#   *    ##        O O                 ****       *#",
+   "#       ##*                        ##########     *#",
+   "#      ##***  *         ****                     **#",
+   "#* **  #  *  ***      #########                  **#",
+   "#* **  #      *               #   *              **#",
+   "#     ##              #   O   #  ***          ######",
+   "#*            @       #       #   *        O  #    #",
+   "#*                    #  ######                 ** #",
+   "###          ****          ***                  ** #",
+   "#       O                        @         O       #",
+   "#   *     ##  ##  ##  ##               ###      *  #",
+   "#   **         #              *       #####  O     #",
+   "##  **  O   O  #  #    ***  ***        ###      ** #",
+   "###               #   *****                    ****#",
+   "####################################################"],
+  {"#": Wall,
+   "@": Tiger,
+   "O": SmartPlantEater, // from previous exercise
+   "*": Plant}
+);
