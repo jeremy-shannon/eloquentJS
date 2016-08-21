@@ -51,7 +51,7 @@ var box = {
   }
 };
 
-console.log("My chapter 8 exercise solutions: \n\n");
+console.log("My chapter 8 exercise solutions: \n");
 
 function MultiplicatorUnitFailure() {}
 
@@ -64,6 +64,19 @@ function primitiveMultiply(a, b) {
 
 function reliableMultiply(a, b) {
   // Your code here.
+  do {
+    try {
+      return primitiveMultiply(a,b);
+    } 
+    catch (ex) {
+      if (ex instanceof(MultiplicatorUnitFailure)) {
+        // console.log("MultiplicatorUnitFailure");
+      }
+      else {
+        throw ex;
+      }
+    }
+  } while (true);
 }
 
 console.log(reliableMultiply(8, 8));
