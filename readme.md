@@ -11,3 +11,6 @@
 - Chapter 7 (open "index.html")
  - Artificial Stupidity (open "stupidity.html")
  - Predators (open "predator.html")
+- Chapter 8
+ - Retry
+ - The Locked Box
