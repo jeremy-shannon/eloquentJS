@@ -40,18 +40,9 @@ function promptDirection(question) {
   throw new InputError("Invalid direction: " + result);
 }
 
-var box = {
-  locked: true,
-  unlock: function() { this.locked = false; },
-  lock: function() { this.locked = true;  },
-  _content: [],
-  get content() {
-    if (this.locked) throw new Error("Locked!");
-    return this._content;
-  }
-};
 
-console.log("My chapter 8 exercise solutions: \n");
+
+console.log("My chapter 8 exercise solutions: \nRetry:\n");
 
 function MultiplicatorUnitFailure() {}
 
@@ -81,3 +72,50 @@ function reliableMultiply(a, b) {
 
 console.log(reliableMultiply(8, 8));
 // → 64
+
+console.log("\nThe Locked Box\n");
+
+var box = {
+  locked: true,
+  unlock: function() { this.locked = false; },
+  lock: function() { this.locked = true;  },
+  _content: ["hi", "guys", "hows", "about", "some", "dummy", "data?"],
+  get content() {
+    if (this.locked) throw new Error("Locked!");
+    return this._content;
+  }
+};
+
+function withBoxUnlocked(body) {
+  // Your code here.
+  var locked = box.locked;
+  try {
+    if (locked) {
+      box.unlock();
+    }
+    return body();
+  }
+  finally {
+    if (locked) {
+      box.lock();
+    }
+  }
+}
+
+withBoxUnlocked(function() {
+  box.content.push("gold piece");
+});
+
+try {
+  withBoxUnlocked(function() {
+    throw new Error("Pirates on the horizon! Abort!");
+  });
+} catch (e) {
+  console.log("Error raised:", e.message); // e.message to leave out the stack trace
+}
+console.log(box.locked);
+// → true
+
+withBoxUnlocked(function() {
+  console.log(box.content);  // hey, I want to see the content!
+});
