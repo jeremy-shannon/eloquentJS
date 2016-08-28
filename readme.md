@@ -16,3 +16,6 @@
  - The Locked Box
 - Chapter 9
  - Regexp Golf
+ - Quoting Style
+ - Numbers Again
+ 
