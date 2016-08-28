@@ -14,3 +14,5 @@
 - Chapter 8
  - Retry
  - The Locked Box
+- Chapter 9
+ - Regexp Golf
