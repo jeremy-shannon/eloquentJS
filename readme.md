@@ -18,4 +18,6 @@
  - Regexp Golf
  - Quoting Style
  - Numbers Again
+- Chapter 10
+ - Month Names
  
