@@ -13,9 +13,17 @@ function parseExpression(program) {
   return parseApply(expr, program.slice(match[0].length));
 }
 
+////////////////////
+// Comments exercise
+////////////////////
+// this function was edited to skip comment lines in addition to whitespace
 function skipSpace(string) {
   var first = string.search(/\S/);
   if (first == -1) return "";
+  if (string[first] == "#") {
+    first = string.search("\n") + 1;
+    return skipSpace(string.slice(first));
+  }
   return string.slice(first);
 }
 

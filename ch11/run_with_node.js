@@ -31,3 +31,11 @@ run("do(define(sum, fun(array,",
     "        sum))),",
     "   print(sum(array(3, 4, 5))))");
 // → 12
+
+console.log(parse("# hello\nx"));
+// → {type: "word", name: "x"}
+
+console.log(parse("a # one\n   # two\n()"));
+// → {type: "apply",
+//    operator: {type: "word", name: "a"},
+//    args: []}
