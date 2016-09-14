@@ -13,9 +13,9 @@ function parseExpression(program) {
   return parseApply(expr, program.slice(match[0].length));
 }
 
-////////////////////
-// Comments exercise
-////////////////////
+/////////////////////////
+// "Comments" exercise:
+/////////////////////////
 // this function was edited to skip comment lines in addition to whitespace
 function skipSpace(string) {
   var first = string.search(/\S/);
@@ -164,7 +164,7 @@ specialForms["fun"] = function(args, env) {
 };
 
 ////////////////////////////
-// "Arrays exercise:
+// "Arrays" exercise:
 ////////////////////////////
 // Modify these definitions...
 
@@ -179,4 +179,24 @@ topEnv["length"] = function(arrayIn) {
 
 topEnv["element"] = function(arrayIn, index) {
   return arrayIn[index];
+};
+
+
+///////////////////////////
+// "Fixing Scope" exercise
+///////////////////////////
+specialForms["set"] = function(args, env) {
+  // Your code here.
+  if (args.length != 2 || args[0].type != "word")
+    throw new SyntaxError("Bad use of set");
+  var value = evaluate(args[1], env);
+  var currentEnv = env;
+  do {
+    if (Object.prototype.hasOwnProperty.call(currentEnv, args[0].name)) {
+      currentEnv[args[0].name] = value;
+      return value;
+    }
+    currentEnv = Object.getPrototypeOf(currentEnv);
+  } while (currentEnv != null)
+  throw new ReferenceError("variable '" + args[0].name + "' not defined");
 };

@@ -23,3 +23,4 @@
 - Chapter 11
  - Arrays
  - Comments
+ - Fixing Scope
